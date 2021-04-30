@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "username": "johnnydoe",
+      "email": "some.address@server.com",
+      "password": "i81b4u",
+      "id": "yJ6zseKGneCgDLZkNXvpJ",
+      "orders": []
+    },
+    {
+      "username": "Thomas",
+      "email": "thomas@gmail.com",
+      "password": "secretpassword",
+      "id": "BY0FmNM4OxXoETcGFAYbW",
+      "orders": [
+        {
+          "userId": "BY0FmNM4OxXoETcGFAYbW",
+          "items": [
+            4,
+            3,
+            3
+          ],
+          "id": "lwivGFhHKa-yiWwIudIxg",
+          "total": 147,
+          "date": "04/30/2021",
+          "time": "3:47 PM",
+          "eta": "4:05 PM"
+        }
+      ]
+    },
+    {
+      "username": "kal-el",
+      "email": "different.address@anotherserver.com",
+      "password": "1337w00t",
+      "id": "tgnT4AugCI9FkYwnLFfRj",
+      "orders": []
+    }
+  ]
+}

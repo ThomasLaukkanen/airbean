@@ -1,0 +1,33 @@
+{
+  "name": "airbean",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crashDeltaGbg/airbean.git"
+  },
+  "keywords": [],
+  "author": "Thomas & Richard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crashDeltaGbg/airbean/issues"
+  },
+  "homepage": "https://github.com/crashDeltaGbg/airbean#readme",
+  "nodemonConfig": {
+    "ignore": [
+      "./database/menu.json",
+      "./database/users.json"
+    ]
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0",
+    "moment": "^2.29.1",
+    "nanoid": "^3.1.22"
+  }
+}
