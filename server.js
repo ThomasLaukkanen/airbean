@@ -45,8 +45,24 @@ app.post('/api/account', (req, res) => {
 	res.json(result);
 });
 
-//Sparar en kaffebeställning för en användare och returnerar en  ETA-tid och ordernummer (båda dessa kan slumpas) till frontend
+app.get('/api/users', (req, res) => {
+	const users = userdb.get('users').value();
+
+	let result = [];
+
+	for (let i = 0; i < users.length; i++) {
+		result.push({ username: users[i].username, id: users[i].id });
+	}
+
+	res.json(result);
+});
+
+//	Sparar en kaffebeställning för en användare och returnerar en ETA-tid och ordernummer (båda dessa kan slumpas) till frontend
 // /api/order
+
+/**
+ * { userId: userId, items: [1, 2, 3] }
+ */
 
 app.post('/api/order', (req, res) => {
 	// Assign order to req.body
@@ -58,21 +74,24 @@ app.post('/api/order', (req, res) => {
 	// initiate var orderTotal
 	let orderTotal = 0;
 
+	let result = {
+		items: []
+	};
+
 	// foreach orderitem find the id and price from menu. Add sum to ordertotal
 	for (let i = 0; i < order.items.length; i++) {
 		const menuItem = db.get('menu').find({ id: order.items[i] }).value();
 		orderTotal += menuItem.price;
+		result.items.push(menuItem.title);
 	}
 
-	let result = {};
-
 	const wait = Math.floor(Math.random() * 10) + 5 + order.items.length * 2;
-	order.id = nanoid();
-	order.total = orderTotal;
-	order.date = moment().format('L');
-	order.time = moment().format('LT');
-	order.eta = moment().add(wait, 'minutes').format('LT');
-	user.orders.push(order);
+	result.id = nanoid();
+	result.total = orderTotal;
+	result.date = moment().format('L');
+	result.time = moment().format('LT');
+	result.eta = moment().add(wait, 'minutes').format('LT');
+	user.orders.push(result);
 
 	userdb.get('users').find(user).assign({ orders: user.orders }).write();
 
@@ -85,15 +104,13 @@ app.post('/api/order', (req, res) => {
 // get order history for user by user ID
 app.get('/api/order/history/:userid', (req, res) => {
 	const user = userdb.get('users').find({ id: req.params.userid }).value();
-	console.log(user.orders);
 	res.json(user.orders);
 });
 
 // search for specific order by order ID
 app.get('/api/order/search/:orderid', (req, res) => {
-	let orderId; //= req.params.orderid;
+	let match = {};
 	const users = userdb.get('users').value();
-
 	let result = {
 		success: false,
 		message: 'No such order.'
@@ -103,15 +120,18 @@ app.get('/api/order/search/:orderid', (req, res) => {
 		const user = users[u];
 		for (let i = 0; i < user.orders.length; i++) {
 			if (user.orders[i].id === req.params.orderid) {
-				orderId = user.orders[u].id;
+				match.id = user.orders[i].id;
+				match.items = user.orders[i].items;
+				match.orderDate = user.orders[i].date;
+				match.orderTime = user.orders[i].time;
+				match.total = user.orders[i].total;
 				result.success = true;
 				result.message = 'A matching order has been found!';
-				result.order = orderId;
+				result.order = match;
 			}
 		}
 	}
 	res.json(result);
-	// console.log(orderId);
 });
 
 // Kunna se pågående beställningar och tidigare beställningar
@@ -119,12 +139,8 @@ app.get('/api/order/search/:orderid', (req, res) => {
 app.get('/api/order/active/:userid', (req, res) => {
 	const currentTime = moment().format('LT');
 	const currentDate = moment().format('L');
-	console.log(currentTime);
-	// const userid = req.params.userid;
 	const user = userdb.get('users').find({ id: req.params.userid }).value();
 	const orders = user.orders;
-	console.log(orders);
-	// let activeOrder = false;
 
 	let result = {
 		success: false,
@@ -133,22 +149,12 @@ app.get('/api/order/active/:userid', (req, res) => {
 
 	for (let i = 0; i < orders.length; i++) {
 		if (orders[i].eta > currentTime && orders[i].date >= currentDate) {
-			// activeOrder = true;
 			result.success = true;
 			result.message = 'You have an active order!';
 			result.activeOrders = orders[i];
 		}
 	}
-
 	res.json(result);
-
-	/*if (currentTime > orders.time && currentTime < order.eta) {
-    result.success = true;
-    result.message = `Your active order is: ${}`
-  } else {
-    result.success = false;
-    result.message = "There is currently no active order."
-  }*/
 });
 
 app.listen(3000, () => {

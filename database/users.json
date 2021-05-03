@@ -49,6 +49,34 @@
       "password": "1337w00t",
       "id": "tgnT4AugCI9FkYwnLFfRj",
       "orders": []
+    },
+    {
+      "username": "tomasito",
+      "email": "myemail@gmail.com",
+      "password": "secretpassword",
+      "id": "ksDlkI-1FZeSvf1t4VFTE",
+      "orders": []
+    },
+    {
+      "username": "hanna",
+      "email": "hanna@gmail.com",
+      "password": "secretpassword",
+      "id": "v6mFBbHh6pqCNrDqV84Mw",
+      "orders": [
+        {
+          "items": [
+            "Caffè Doppio",
+            "Cappuccino",
+            "Kaffe Latte",
+            "Bryggkaffe"
+          ],
+          "id": "U46AVEI61LcDm9FLQIpzQ",
+          "total": 191,
+          "date": "05/03/2021",
+          "time": "2:25 PM",
+          "eta": "2:39 PM"
+        }
+      ]
     }
   ]
 }
