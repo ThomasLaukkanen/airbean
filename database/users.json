@@ -5,7 +5,22 @@
       "email": "some.address@server.com",
       "password": "i81b4u",
       "id": "yJ6zseKGneCgDLZkNXvpJ",
-      "orders": []
+      "orders": [
+        {
+          "userId": "yJ6zseKGneCgDLZkNXvpJ",
+          "items": [
+            4,
+            3,
+            3,
+            1
+          ],
+          "id": "tx2rER6-vJDUL49g5vuCt",
+          "total": 186,
+          "date": "05/03/2021",
+          "time": "12:27 PM",
+          "eta": "12:44 PM"
+        }
+      ]
     },
     {
       "username": "Thomas",
