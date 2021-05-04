@@ -30,11 +30,9 @@ app.post('/api/account', (req, res) => {
 	let result = {};
 
 	if (userExist) {
-		// Körs om users inte är tom och det finns en matchning
 		result.success = false;
 		result.message = 'An account with that username already exists';
 	} else {
-		// Körs om users inte är tom och det inte finns en matchning
 		user.id = nanoid();
 		user.orders = [];
 		userdb.get('users').push(user).write();
