@@ -35,6 +35,11 @@
       "title": "Cortado",
       "desc": "Bryggd på månadens bönor.",
       "price": 39
+    },{
+      "id": 7,
+      "title": "Gustav Adolfsbakelse",
+      "desc": "Världens godaste bakelse",
+      "price": 40
     }
   ]
 }
