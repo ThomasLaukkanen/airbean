@@ -9,9 +9,11 @@ const menu = new FileSync('./database/menu.json')
 const users = new FileSync('./database/users.json')
 const db = lowdb(menu)
 const userdb = lowdb(users)
+const cors = require('cors')
 userdb.defaults({ users: [] }).write()
 
 app.use(express.json())
+app.use(cors())
 
 // Hämta meny från databasen /api/coffee
 app.get('/api/coffee', (req, res) => {
